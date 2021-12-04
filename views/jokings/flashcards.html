@@ -59,7 +59,7 @@
             <tr>
                 <td>{{ .Id }}</td>
                 <td>{{ .Front }}</td>
-                <td>{{ .Back }}</td>
+                <td>-----------</td> <!--{{ .Back }} -->
                 <td> 
                     <a href="/product/edit?id={{ .Id }}"> Edit | </a>
                     <a href="/product/delete?id={{ .Id }}" onclick="return confirm('Are u sure?')"> Delete | </a>
