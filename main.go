@@ -2,12 +2,11 @@ package main
 
 import (
 	"goWebApp/controllers/jokingscontroller"
-	"goWebApp/controllers/productcontroller"
+	"goWebApp/controllers/multicontroller"
 	"net/http"
 )
 
 func main() {
-
 	mux := http.NewServeMux()
 
 	files := http.FileServer(http.Dir("/views/public"))
@@ -16,24 +15,21 @@ func main() {
 	mux.HandleFunc("/", jokingscontroller.RealIndex)
 
 	mux.HandleFunc("/jokings/flashcards", jokingscontroller.FlashJokings)
+
 	mux.HandleFunc("/jokings/flashcard/add", jokingscontroller.Add)
 	mux.HandleFunc("/jokings/flashcard/processadd", jokingscontroller.ProcessAdd)
 
 	mux.HandleFunc("/jokings/flashcard", jokingscontroller.View)
+
 	mux.HandleFunc("/jokings/flashcard/edit", jokingscontroller.Edit)
 	mux.HandleFunc("/jokings/flashcard/update", jokingscontroller.Update)
+
 	mux.HandleFunc("/jokings/flashcard/delete", jokingscontroller.Delete)
 
+	// Multi Languages Cards
 
-	mux.HandleFunc("/list", productcontroller.Index)
-	mux.HandleFunc("/product", productcontroller.Index)
-	mux.HandleFunc("/product/index", productcontroller.Index)
-	mux.HandleFunc("/product/add", productcontroller.Add)
-	http.HandleFunc("/product/processadd", productcontroller.ProcessAdd)
-	mux.HandleFunc("/product/delete", productcontroller.Delete)
-	mux.HandleFunc("/product/edit", productcontroller.Edit)
-	mux.HandleFunc("/product/update", productcontroller.Update)
-
+	mux.HandleFunc("/multicards", multicontroller.Index)
+	mux.HandleFunc("/multicards/multicard", multicontroller.View)
 
 	http.ListenAndServe(":8080", mux)
 }
