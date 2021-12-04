@@ -16,6 +16,8 @@ func main() {
 	mux.HandleFunc("/", jokingscontroller.RealIndex)
 	mux.HandleFunc("/jokings/flashcards", jokingscontroller.FlashJokings)
 	mux.HandleFunc("/jokings/contents", jokingscontroller.ContentJokings)
+	mux.HandleFunc("/jokings/flashcard/add", jokingscontroller.Add)
+	mux.HandleFunc("/jokings/flashcard/processadd", jokingscontroller.ProcessAdd)
 
 	mux.HandleFunc("/list", productcontroller.Index)
 	mux.HandleFunc("/product", productcontroller.Index)

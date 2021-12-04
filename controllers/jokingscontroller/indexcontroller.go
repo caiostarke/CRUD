@@ -1,6 +1,7 @@
 package jokingscontroller
 
 import (
+	"goWebApp/entities"
 	"goWebApp/models"
 	"html/template"
 	"net/http"
@@ -49,4 +50,23 @@ func View(w http.ResponseWriter, r *http.Request) {
 
 	tmp, _ := template.ParseFiles("views/jokings/flashcard.html")
 	tmp.Execute(w, data)
+}
+
+func Add(w http.ResponseWriter, r *http.Request) {
+	tmp, _ := template.ParseFiles("views/jokings/flashadd.html")
+	tmp.Execute(w, nil)
+}
+
+func ProcessAdd(w http.ResponseWriter, r *http.Request) {
+
+	r.ParseForm()
+
+	var flashcard entities.Flashcard
+
+	flashcard.Front = r.FormValue("front")
+	flashcard.Back = r.Form.Get("back")
+
+	var FlashModel models.FlashModel
+	FlashModel.Create(&flashcard)
+	http.Redirect(w, r, "/jokings/flashcards", http.StatusSeeOther)
 }

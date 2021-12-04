@@ -48,3 +48,18 @@ func (*FlashModel) Find(id int64) (entities.Flashcard, error) {
 		}
 	}
 }
+
+func (*FlashModel) Create(flashcard *entities.Flashcard) bool {
+	db, err := config.GetDb()
+	if err != nil {
+		return false
+	} else {
+		result, err2 := db.Exec("insert into flashcards (front, back) values (?, ?)", flashcard.Front, flashcard.Back)
+		if err2 != nil {
+			return false
+		} else {
+			rowsAffected, _ := result.RowsAffected()
+			return rowsAffected > 0
+		}
+	}
+}
