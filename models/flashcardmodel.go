@@ -5,7 +5,7 @@ import (
 	"goWebApp/entities"
 )
 
-type FlashModel struct {}
+type FlashModel struct{}
 
 func (*FlashModel) FindAll() ([]entities.Flashcard, error) {
 	db, err := config.GetDb()
@@ -55,6 +55,36 @@ func (*FlashModel) Create(flashcard *entities.Flashcard) bool {
 		return false
 	} else {
 		result, err2 := db.Exec("insert into flashcards (front, back) values (?, ?)", flashcard.Front, flashcard.Back)
+		if err2 != nil {
+			return false
+		} else {
+			rowsAffected, _ := result.RowsAffected()
+			return rowsAffected > 0
+		}
+	}
+}
+
+func (*FlashModel) Update(flashcard entities.Flashcard) bool {
+	db, err := config.GetDb()
+	if err != nil {
+		return false
+	} else {
+		result, err2 := db.Exec("update flashcards set front=?, back=? where id=?", flashcard.Front, flashcard.Back, flashcard.Id)
+		if err2 != nil {
+			return false
+		} else {
+			rowsAffected, _ := result.RowsAffected()
+			return rowsAffected > 0
+		}
+	}
+}
+
+func (*FlashModel) Delete(id int64) bool {
+	db, err := config.GetDb()
+	if err != nil {
+		return false
+	} else {
+		result, err2 := db.Exec("delete from flashcards where id=?", id)
 		if err2 != nil {
 			return false
 		} else {
